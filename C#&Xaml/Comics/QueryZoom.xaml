@@ -1,0 +1,110 @@
+﻿<Page
+    x:Class="Jan_Linq.QueryZoom"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Jan_Linq"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:ComicQueryManager x:Name="comicQueryManager"/>
+        <x:String x:Key="AppName">My App</x:String>
+        <DataTemplate x:Key="Standard130ItemTemplate"><!--template for queries-->
+            <Grid Height="110" Margin="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="110" Height="110">
+                    <Image Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                </Border>
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Subtitle}" Style="{StaticResource CaptionTextBlockStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Description}" Style="{StaticResource BodyTextBlockStyle}" MaxHeight="60"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="120,0" 
+                   DataContext="{StaticResource ResourceKey=comicQueryManager}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Margin="0,0,0,20"
+               Text="Wykonaj gest ściśnięcia, by wyświetlić dane szczegółowe lub listę" />
+            <!--zoom-->
+            <SemanticZoom IsZoomedInViewActive="False" Grid.Row="1">
+
+                <SemanticZoom.ZoomedOutView>
+                    <ListView ItemsSource="{Binding CurrenQueryResults}" Margin="0,0,20,0" 
+                        ItemTemplate="{StaticResource Standard130ItemTemplate}" 
+                        SelectionMode="None" />
+                </SemanticZoom.ZoomedOutView>
+
+                <SemanticZoom.ZoomedInView>
+                    <GridView ItemsSource="{Binding CurrenQueryResults}"
+                    Margin="0,0,20,0" SelectionMode="None" x:Name="detailGridView">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="780" Width="600" Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding Comic.Cover}" Margin="0,0,20,0"
+                         Stretch="UniformToFill" Width="326" Height="500"
+                         VerticalAlignment="Top"/>
+
+                                    <StackPanel Grid.Column="1">
+                                        <!--list of comics-->
+                                        <TextBlock Text="Tytuł" 
+                                 Style="{StaticResource CaptionTextBlockStyle}" />
+                                        <TextBlock Text="{Binding Comic.Name}"
+                                 Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                                        <TextBlock Text="Numer"
+                                 Style="{StaticResource CaptionTextBlockStyle}" Margin="0,10,0,0" />
+                                        <TextBlock Text="{Binding Comic.Issue}"
+                                 Style="{StaticResource BodyTextBlockStyle}" />
+
+                                        <TextBlock Text="Rok"
+                                 Style="{StaticResource CaptionTextBlockStyle}" Margin="0,10,0,0" />
+                                        <TextBlock Text="{Binding Comic.Year}"
+                                 Style="{StaticResource BodyTextBlockStyle}" />
+
+                                        <TextBlock Text="Cena"
+                                 Style="{StaticResource CaptionTextBlockStyle}" Margin="0,10,0,0" />
+                                        <TextBlock Text="{Binding Comic.CoverPrice}"
+                                 Style="{StaticResource BodyTextBlockStyle}" />
+
+                                        <TextBlock Text="Główny przeciwnik"
+                                 Style="{StaticResource CaptionTextBlockStyle}" Margin="0,10,0,0" />
+                                        <TextBlock Text="{Binding Comic.MainVillain}"
+                                 Style="{StaticResource BodyTextBlockStyle}" />
+
+                                        <TextBlock Text="Streszczenie"
+                                 Style="{StaticResource CaptionTextBlockStyle}" Margin="0,10,0,0" />
+                                        <TextBlock Text="{Binding Comic.Synopsis}"
+                                 Style="{StaticResource BodyTextBlockStyle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </SemanticZoom.ZoomedInView>
+            </SemanticZoom>
+        </Grid>
+    </Grid>
+</Page>

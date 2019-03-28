@@ -1,0 +1,79 @@
+﻿<Page x:Class="ryby2.MainWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ryby2"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      Title="MainWindow">
+    <Page.Resources>
+        <local:Game x:Key="Game" x:Name="game"/>
+        <Style TargetType="TextBlock" x:Key="SubheaderTextStyle">
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Width" Value="135"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,20,0,20"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BatonStyle">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Snow"/>
+            <Setter Property="Margin" Value="0,20,0,20"/>
+        </Style>
+    </Page.Resources>
+
+
+    <Grid DataContext="{StaticResource ResourceKey=Game}"  x:Name="PageLayout" Grid.Row="1" Margin="0" Background="Black">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="Auto" MinHeight="61.6"/>
+            <RowDefinition Height="Auto" MinHeight="43.2"/>
+            <RowDefinition Height="Auto" MinHeight="28.8"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="36.8"/>
+            <RowDefinition Height="Auto" MinHeight="130.4"/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Text="Name" Margin="43,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1"
+                   Style="{StaticResource SubheaderTextStyle}"/>
+        <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Top" Height="39" Width="582" Orientation="Horizontal" Margin="10,0.4,0,0" Grid.Row="2" Background="Black" Grid.ColumnSpan="2">
+            
+            <TextBox  IsEnabled="{Binding GameNotStarted}" Text="{Binding PlayerName,Mode=TwoWay}" x:Name="PlayerName" TextWrapping="Wrap"  VerticalAlignment="Center" MinWidth="300" Width="500" HorizontalAlignment="Center" Height="29" Background="White"/>
+            
+            <Button x:Name="startButton" Content="Start" IsEnabled="{Binding GameNotStarted}"  Margin="10,10,0,9.2" Width="70" MinWidth="50" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Style="{StaticResource BatonStyle}" Click="startButton_Click"/>
+            
+        </StackPanel>
+        <TextBlock HorizontalAlignment="Left" Margin="46,10.2,0,0" Text="game progress" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Top" Style="{StaticResource SubheaderTextStyle}" Grid.RowSpan="2"/>
+        
+        <ScrollViewer Content="{Binding GameProgress}" Margin="46,7.4,220.8,9.4" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="18" Background="White"
+                      Foreground="Black" />
+        
+        <TextBlock HorizontalAlignment="Left" Margin="46,10.6,0,0" Grid.Row="5" TextWrapping="Wrap" Text="Groups" VerticalAlignment="Top"
+                   Style="{StaticResource SubheaderTextStyle}"/>
+        
+        <ScrollViewer Content="{Binding Books}"  HorizontalAlignment="Stretch" Margin="43,9.8,220.8,9.6" Grid.Row="6" VerticalAlignment="Stretch" Background="White "
+                      Foreground="Black"  />
+        
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="113.2,24,-25,16.6" Grid.Row="1" TextWrapping="Wrap" Text="Hand" Style="{StaticResource SubheaderTextStyle}" Height="Auto"/>
+        <ListBox MouseDoubleClick="cards_DoubleTapped" IsEnabled="{Binding GameInProgress}" x:Name="cards" FontSize="24" Grid.Column="2" ItemsSource="{Binding Hand}"
+                 HorizontalAlignment="Stretch" Height="Auto" Margin="21.2,0.4,12,2.2" Grid.Row="2" VerticalAlignment="Stretch" Grid.RowSpan="4"/>
+        
+        <Button   IsEnabled="{Binding GameInProgress}" x:Name="askForACard" Content="requestCard" Grid.Column="2" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10.2,81.8,30,25.6" Grid.Row="6" Style="{StaticResource BatonStyle}" Click="askForACard_Click"/>
+
+    </Grid>
+
+</Page>
