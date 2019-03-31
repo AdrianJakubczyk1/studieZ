@@ -1,3 +1,3 @@
 # Projects
 C#,Java,Pyhon,C/C++
-just some random project <.<
+just some random projects.
