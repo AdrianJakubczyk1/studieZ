@@ -1,0 +1,36 @@
+table {
+
+/*	margin: 400px 100px 600px 500px;*/
+	margin: auto;
+	border-top:0 solid green;
+	margin-top: 300px;
+
+}
+tr{
+
+	padding: 10px;
+	padding-left: 200px;
+	border-top:0px solid green ;
+}
+td{
+	border-left: 1px solid green ;
+	border-right:1px solid green ;
+	border-bottom: 1px solid green ;
+	padding: 15px;
+	padding-left: 100px;
+	padding-top: 100px;
+	padding-bottom: 10px;
+	
+}
+tr>td{
+	border-left:0px solid green ;
+}
+
+tr:nth-of-type(3) td{
+	border-bottom: 0px solid green 
+}
+
+tr td:nth-of-type(3)
+{
+	border-right: 0px solid green ;
+}
